@@ -7,7 +7,33 @@
  */
 
 /**
- * Filters messages from the chat in game.
+ * Options for the observers.
+ * @constant {Object}
+ * @property {boolean} childList - Whether to observe the addition of new child nodes or removal of existing child nodes.
+ * @property {boolean} subtree - Whether to extend monitoring to the entire subtree of nodes rooted at the target.
+ * @default
+ */
+const observerOptions = {childList: true, subtree: true};
+
+/**
+ * The state of the chat observer.
+ * True if the chat observer is active, false otherwise.
+ * @type {boolean}
+ * @default
+ */
+let chatObserverState = false;
+
+/**
+ * The chat observer.
+ * Calls the filterMessages function when a new message is added to the chat.
+ * @type {MutationObserver}
+ * @default
+ */
+let chatObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) filterMessages();
+    });
+});
  * @function
  * @name filterMessages
  * @returns {void}
