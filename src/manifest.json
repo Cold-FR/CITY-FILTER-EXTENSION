@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "HabboCity - Ignorer",
+  "version": "1.0",
+  "description": "Permet d'ignorer les messages en jeu d'un ou plusieurs utilisateurs sur HabboCity.me.",
+  "permissions": ["activeTab"],
+  "content_scripts": [
+    {
+      "matches": ["https://nitro.habbocity.me/*"],
+      "js": ["./scripts/content.js"],
+      "all_frames": true
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "imgs/icon.ico"
+  }
+}
