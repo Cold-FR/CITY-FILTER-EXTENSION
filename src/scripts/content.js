@@ -79,3 +79,26 @@ function disconnectChatObserver() {
     chatObserverState = false;
     chatObserver.disconnect();
 }
+
+/**
+ * The body observer.
+ * Check if the chat is added to the DOM and calls the setUpChatObserver function.
+ * @constant {MutationObserver}
+ * @default
+ */
+const bodyObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if (mutation.type === 'childList') {
+            if (mutation.addedNodes.length > 0 && !chatObserverState) {
+                if (mutation.addedNodes[0].classList.contains('nitro-chat-widget')) setUpChatObserver();
+            } else if(mutation.removedNodes.length > 0 && chatObserverState) {
+                if(mutation.removedNodes[0].classList.contains('nitro-chat-widget')) {
+                    chatObserver.disconnect();
+                    chatObserverState = false;
+                }
+            }
+        }
+    });
+});
+
+bodyObserver.observe(document.getElementById('root'), observerOptions);
