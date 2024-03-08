@@ -34,6 +34,16 @@ let chatObserver = new MutationObserver((mutations) => {
         if (mutation.type === 'childList' && mutation.addedNodes.length > 0) filterMessages();
     });
 });
+
+/**
+ * @type {string[]} - The list of usernames to filter.
+ * @default
+ */
+let usernamesFiltered = [];
+chrome.storage.sync.get('usernames', (data) => {
+    usernamesFiltered = data;
+});
+
 /**
  * Filters messages from the chat in game based on the global list of usernames to filter.
  * @function
@@ -44,6 +54,6 @@ function filterMessages() {
     chats.forEach((div) => {
         div.classList.add('fetched');
         const username = div.querySelector('.chat-content .username').innerText.replace(':', '').replace(' ', '');
-        if (usernames.includes(username.toLowerCase())) div.style.display = 'none';
+        if (usernamesFiltered.includes(username.toLowerCase())) div.style.display = 'none';
     });
 }
