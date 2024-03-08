@@ -91,8 +91,8 @@ const bodyObserver = new MutationObserver((mutations) => {
         if (mutation.type === 'childList') {
             if (mutation.addedNodes.length > 0 && !chatObserverState) {
                 if (mutation.addedNodes[0].classList.contains('nitro-chat-widget')) setUpChatObserver();
-            } else if(mutation.removedNodes.length > 0 && chatObserverState) {
-                if(mutation.removedNodes[0].classList.contains('nitro-chat-widget')) {
+            } else if (mutation.removedNodes.length > 0 && chatObserverState) {
+                if (mutation.removedNodes[0].classList.contains('nitro-chat-widget')) {
                     chatObserver.disconnect();
                     chatObserverState = false;
                 }
