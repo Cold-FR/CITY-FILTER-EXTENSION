@@ -26,10 +26,10 @@ let chatObserverState = false;
 /**
  * The chat observer.
  * Calls the filterMessages function when a new message is added to the chat.
- * @type {MutationObserver}
+ * @const {MutationObserver}
  * @default
  */
-let chatObserver = new MutationObserver((mutations) => {
+const chatObserver = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
         if (mutation.type === 'childList' && mutation.addedNodes.length > 0) filterMessages();
     });
