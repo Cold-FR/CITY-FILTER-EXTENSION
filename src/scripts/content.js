@@ -50,7 +50,7 @@ chrome.storage.sync.get('usernames', (data) => {
  * @returns {void}
  */
 function filterMessages() {
-    let chats = Array.from(document.querySelectorAll('.bubble-container:not(.fetched)'));
+    const chats = Array.from(document.querySelectorAll('.bubble-container:not(.fetched)'));
     chats.forEach((div) => {
         div.classList.add('fetched');
         const username = div.querySelector('.chat-content .username').innerText.replace(':', '').replace(' ', '');
