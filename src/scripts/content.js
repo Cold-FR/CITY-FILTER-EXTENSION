@@ -34,8 +34,9 @@ let chatObserver = new MutationObserver((mutations) => {
         if (mutation.type === 'childList' && mutation.addedNodes.length > 0) filterMessages();
     });
 });
+/**
+ * Filters messages from the chat in game based on the global list of usernames to filter.
  * @function
- * @name filterMessages
  * @returns {void}
  */
 function filterMessages() {
