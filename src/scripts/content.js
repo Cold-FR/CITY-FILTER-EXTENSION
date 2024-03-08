@@ -57,3 +57,15 @@ function filterMessages() {
         if (usernamesFiltered.includes(username.toLowerCase())) div.style.display = 'none';
     });
 }
+
+/**
+ * Sets up the chat observer to active mode.
+ * @function
+ * @returns {void}
+ */
+function setUpChatObserver() {
+    chatObserverState = true;
+    const chatContainer = document.querySelector('.nitro-chat-widget');
+
+    if (chatContainer) chatObserver.observe(chatContainer, observerOptions);
+}
