@@ -41,6 +41,8 @@ const chatObserver = new MutationObserver((mutations) => {
  */
 let usernamesFiltered = [];
 chrome.storage.sync.get('usernames', (data) => {
+    if(!data.usernames || data.usernames.length === 0) return;
+
     usernamesFiltered = data;
 });
 
