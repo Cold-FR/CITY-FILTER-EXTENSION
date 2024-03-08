@@ -69,3 +69,13 @@ function setUpChatObserver() {
 
     if (chatContainer) chatObserver.observe(chatContainer, observerOptions);
 }
+
+/**
+ * Disconnect the chat observer.
+ * @function
+ * @returns {void}
+ */
+function disconnectChatObserver() {
+    chatObserverState = false;
+    chatObserver.disconnect();
+}
