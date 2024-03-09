@@ -40,11 +40,7 @@ const chatObserver = new MutationObserver((mutations) => {
  * @default
  */
 let usernamesFiltered = [];
-chrome.storage.sync.get('usernames', (data) => {
-    if(!data.usernames || data.usernames.length === 0) return;
-
-    usernamesFiltered = data;
-});
+fetchUsernames();
 
 /**
  * Filters messages from the chat in game based on the global list of usernames to filter.
@@ -80,6 +76,19 @@ function setUpChatObserver() {
 function disconnectChatObserver() {
     chatObserverState = false;
     chatObserver.disconnect();
+}
+
+/**
+ * Fetches the list of usernames to filter from the storage.
+ * @function
+ * @returns {void}
+ */
+function fetchUsernames() {
+    chrome.storage.sync.get('usernames', (data) => {
+        if (!data.usernames || (data.usernames.length === 0 && usernamesFiltered.length === 0)) return;
+
+        usernamesFiltered = data.usernames.map((username) => username.toLowerCase());
+    });
 }
 
 /**
