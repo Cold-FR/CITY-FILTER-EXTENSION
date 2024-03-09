@@ -110,3 +110,7 @@ const bodyObserver = new MutationObserver((mutations) => {
 });
 
 bodyObserver.observe(document.getElementById('root'), observerOptions);
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.checkUsernames) fetchUsernames();
+});
