@@ -1,0 +1,194 @@
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('./fonts/ubuntu.ttf') format('truetype'),
+    local('Ubuntu Condensed');
+    font-display: swap
+}
+
+:root {
+    --black: black;
+    --white: white;
+    --white-forced: white;
+    --grey: #ececec;
+    --grey-light: rgb(245, 245, 245);
+    --grey-dark: #d9d9d9;
+    --yellow: #FDC628;
+    --blue: #e3f4ff;
+}
+
+.black {
+    --black: #d4d4d4;
+    --white: #383838;
+    --grey: #1a1a1a;
+    --grey-light: #1a1a1a;
+    --grey-dark: #2f2f33;
+    --yellow: #818181;
+    --blue: #1a1a1a;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    overflow-x: hidden;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    font-family: 'Ubuntu', sans-serif;
+    width: 300px;
+    background: var(--white);
+    color: var(--black);
+}
+
+input {
+    width: 100%;
+    font-family: 'Ubuntu', sans-serif !important;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    margin-right: 10px;
+    padding: 5px 10px 5px;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+input[type="submit"] {
+    background: #38a4b8;
+    border: none;
+    border-bottom: 4px solid rgba(0, 0, 0, .2);
+    border-radius: 13px;
+    color: var(--white-forced);
+    font-size: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type="submit"]:hover {
+    background: #2e8e9e;
+    cursor: pointer;
+}
+
+input:active {
+    outline: none;
+}
+
+input:focus {
+    outline: none;
+}
+
+p {
+    text-align: center;
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.content {
+    padding: 15px;
+}
+
+#colorMode {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    background-image: url("./imgs/icon_white.png");
+    width: 36px;
+    height: 36px;
+}
+
+#colorMode:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.black #colorMode {
+    background-image: url("./imgs/icon_dark.png");
+}
+
+.logo {
+    width: 146px;
+    height: 58px;
+    background-image: url("./imgs/logo_city_white.png");
+    margin: 0 auto 10px;
+}
+
+.black .logo {
+    background: url("./imgs/logo_city_black.png") no-repeat;
+}
+
+.title {
+    margin: 0 auto;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.description {
+    font-size: 16px;
+}
+
+#ignore-player {
+    margin: 10px auto;
+}
+
+#ignored-players-list {
+    gap: 10px;
+    display: flex;
+    border: 1px solid #eaeaea;
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 13px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.ignored-player {
+    user-select: none;
+    font-size: 19px;
+    color: var(--white-forced);
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: #D22B2B;
+    border-bottom: 2px solid rgba(0, 0, 0, .2);
+}
+
+.ignored-player:hover {
+    cursor: pointer;
+    background-color: #B21F1F;
+}
+
+.empty {
+    width: 100%;
+}
+
+#loader {
+    position: fixed;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background: var(--white);
+}
+
+.loaderSpinner {
+    height: 60px;
+    width: 62px;
+    background: url(./imgs/loader.png) no-repeat;
+    background-size: contain;
+    animation: rotation 0.7s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
