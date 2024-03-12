@@ -84,7 +84,7 @@ function disconnectChatObserver() {
  * @returns {void}
  */
 function fetchUsernames() {
-    chrome.storage.sync.get('usernames', (data) => {
+    chrome.storage.local.get('usernames', (data) => {
         if (!data.usernames || (data.usernames.length === 0 && usernamesFiltered.length === 0)) return;
 
         usernamesFiltered = data.usernames.map((username) => username.toLowerCase());
