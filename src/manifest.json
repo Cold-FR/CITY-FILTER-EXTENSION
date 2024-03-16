@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "HabboCity - Ignorer",
+  "name": "HabboCity - Filter",
   "version": "1.0",
   "description": "Permet d'ignorer les messages en jeu d'un ou plusieurs utilisateurs sur HabboCity.me.",
   "permissions": [
