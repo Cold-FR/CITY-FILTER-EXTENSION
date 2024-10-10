@@ -131,11 +131,11 @@ p {
     font-size: 16px;
 }
 
-#ignore-player {
+#ignore-values {
     margin: 10px auto;
 }
 
-#ignored-players-list {
+#ignored-values-list {
     gap: 10px;
     display: flex;
     border: 1px solid #eaeaea;
@@ -146,7 +146,7 @@ p {
     justify-content: flex-start;
 }
 
-.ignored-player {
+.ignored-value {
     user-select: none;
     font-size: 19px;
     color: var(--white-forced);
@@ -156,7 +156,7 @@ p {
     border-bottom: 2px solid rgba(0, 0, 0, .2);
 }
 
-.ignored-player:hover {
+.ignored-value:hover {
     cursor: pointer;
     background-color: #B21F1F;
 }

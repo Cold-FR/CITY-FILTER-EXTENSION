@@ -11,18 +11,19 @@
     <div class="loaderSpinner"></div>
 </div>
 <div class="content">
+    <div id="changeMode"></div>
     <div id="colorMode"></div>
     <div class="logo"></div>
-    <h3 class="title">Ignorer des joueurs</h3>
-    <p class="description">Vous pouvez ignorer des joueurs pour ne plus voir leurs messages dans le chat.</p>
-    <form id="ignore-player">
-        <input type="text" name="username" placeholder="Nom d'utilisateur" required>
-        <input type="submit" value="Ignorer le joueur">
+    <h3 class="title" id="head-title">Ignorer des joueurs</h3>
+    <p class="description" id="head-description">Vous pouvez ignorer des joueurs pour ne plus voir leurs messages apparaître dans le tchat.</p>
+    <form id="ignore-add-form">
+        <input id="ignore-input" type="text" name="username" placeholder="Nom d'utilisateur" required>
+        <input id="ignore-submit" type="submit" value="Ignorer le joueur">
     </form>
-    <div class="ignored-players">
-        <h3 class="title">Joueurs ignorés</h3>
-        <p class="description">Vous pouvez débloquer des joueurs que vous avez ignorés.</p>
-        <div id="ignored-players-list">
+    <div class="ignored-values">
+        <h3 class="title" id="ignored-values-title">Joueurs ignorés</h3>
+        <p class="description" id="ignored-values-description">Vous pouvez retirer un joueur de la liste des joueurs que vous avez ignorés.</p>
+        <div id="ignored-values-list">
         </div>
     </div>
 </div>
