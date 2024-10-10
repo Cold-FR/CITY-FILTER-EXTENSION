@@ -91,6 +91,19 @@ p {
     padding: 15px;
 }
 
+#changeMode {
+    position: absolute;
+    left: 10px;
+    top: 5px;
+    background: url("./imgs/words.png") center no-repeat;
+    width: 32px;
+    height: 33px;
+}
+
+#changeMode.usernames {
+    background-image: url("./imgs/users.png");
+}
+
 #colorMode {
     position: absolute;
     right: 5px;
@@ -100,7 +113,7 @@ p {
     height: 36px;
 }
 
-#colorMode:hover {
+#colorMode:hover, #changeMode:hover {
     cursor: pointer;
     opacity: 0.8;
 }
