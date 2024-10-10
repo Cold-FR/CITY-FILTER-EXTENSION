@@ -11,12 +11,18 @@ We collect information about your preference for light or dark theme to enhance 
 ### 1.2 Ignored Usernames:
 To make the extension work, we maintain a list of usernames that you choose to ignore. This list is stored securely and is used solely for the purpose of filtering content within the product.
 
+### 1.3 Ignored Words:
+To make the extension work, we maintain a list of words that you choose to ignore. This list is stored securely and is used solely for the purpose of filtering content within the product.
+
 ## 2. Data Usage
 ### 2.1 Preferences:
 Your theme preference is used to customize the visual display of our product according to your choice.
 
 ### 2.2 Ignored Usernames:
 The list of ignored usernames is utilized to filter out content associated with those usernames from your view within the product.
+
+### 2.3 Ignored Words:
+The list of ignored words is utilized to filter out content associated with those words from your view within the product.
 
 ## 3. Data Sharing
 We do not share your preference for light or dark theme or the list of ignored usernames with any third parties.
