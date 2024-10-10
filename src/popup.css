@@ -87,6 +87,10 @@ p {
     padding: 0;
 }
 
+form {
+    margin-top: 5px;
+}
+
 .content {
     padding: 15px;
 }
@@ -106,7 +110,7 @@ p {
 
 #colorMode {
     position: absolute;
-    right: 5px;
+    right: 10px;
     top: 5px;
     background-image: url("./imgs/icon_white.png");
     width: 36px;
