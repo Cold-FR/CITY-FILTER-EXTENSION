@@ -8,13 +8,15 @@
 
 /**
  * @type {string[]} - The list of usernames to filter.
+ * @default []
  */
-let usernamesFiltered = fetchUsernames();
+let usernamesFiltered = [];
 
 /**
  * @type {string[]} - The list of words to filter.
+ * @default []
  */
-let wordsFiltered = fetchWords();
+let wordsFiltered = [];
 
 /**
  * Options for the observers.
@@ -112,27 +114,28 @@ function filterMessages() {
 /**
  * Fetches the list of usernames to filter from the storage.
  * @function
- * @returns {string[]}
+ * @returns {void}
  */
-async function fetchUsernames() {
-    const data = await chrome.storage.local.get('usernames');
-    const usernames = data.usernames;
-    if (!usernames || (usernames.length === 0 && usernamesFiltered.length === 0)) return [];
+function fetchUsernames() {
+    chrome.storage.local.get('usernames', (data) => {
+        const usernames = data.usernames;
 
-    return usernames.map((username) => username.toLowerCase());
+        usernamesFiltered = usernames.map((user) => user.toLowerCase());
+    });
 }
 
 /**
  * Fetches the list of words to filter from the storage.
  * @function
- * @returns {string[]}
+ * @returns {void}
  */
-async function fetchWords() {
-    const data = await chrome.storage.local.get('words');
-    const words = data.words;
-    if (!words || (words.length === 0 && wordsFiltered.length === 0)) return [];
+function fetchWords() {
+    chrome.storage.local.get('words', (data) => {
+        const words = data.words;
+        if (!words || (words.length === 0 && wordsFiltered.length === 0)) return [];
 
-    return words.map((word) => word.toLowerCase());
+        wordsFiltered = words.map((word) => word.toLowerCase());
+    });
 }
 
 /**
@@ -143,7 +146,10 @@ async function fetchWords() {
  * @listens chrome.runtime.onMessage
  */
 chrome.runtime.onMessage.addListener((request) => {
-    if (request.checkUsernames) usernamesFiltered = fetchUsernames();
+    if (request.checkUsernames) fetchUsernames();
 
-    if (request.checkWords) wordsFiltered = fetchWords();
+    if (request.checkWords) fetchWords();
 });
+
+fetchUsernames();
+fetchWords();
