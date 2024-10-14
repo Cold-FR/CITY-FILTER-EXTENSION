@@ -151,11 +151,13 @@ function toggleColorMode() {
  * @returns {void}
  */
 function addIgnoredValue(value) {
+    if(value.trim() === '') return;
+
     chrome.storage.local.get(mode, (data) => {
         const values = data[mode] || [];
-        const valuesCheck = values.map((value) => value.toLowerCase());
+        const valuesCheck = values.map((value) => value.toLowerCase().trim());
         if(valuesCheck.includes(value.toLowerCase())) return;
-        values.push(value);
+        values.push(value.trim());
 
         chrome.storage.local.set({ [mode]: values }, () => {
             displayIgnoredValues();
