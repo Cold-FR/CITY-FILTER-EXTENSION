@@ -7,6 +7,16 @@
  */
 
 /**
+ * @type {string[]} - The list of usernames to filter.
+ */
+let usernamesFiltered = fetchUsernames();
+
+/**
+ * @type {string[]} - The list of words to filter.
+ */
+let wordsFiltered = fetchWords();
+
+/**
  * Options for the observers.
  * @constant {Object}
  * @property {boolean} childList - Whether to observe the addition of new child nodes or removal of existing child nodes.
@@ -78,21 +88,6 @@ const bodyObserver = new MutationObserver((mutations) => {
 bodyObserver.observe(document.getElementById('root'), observerOptions);
 
 /**
- * @type {string[]} - The list of usernames to filter.
- * @default []
- */
-let usernamesFiltered = [];
-
-/**
- * @type {string[]} - The list of words to filter.
- * @default []
- */
-let wordsFiltered = [];
-
-fetchUsernames();
-fetchWords();
-
-/**
  * Filters messages from the chat in game based on the global list of usernames to filter.
  * @function
  * @returns {void}
@@ -117,27 +112,27 @@ function filterMessages() {
 /**
  * Fetches the list of usernames to filter from the storage.
  * @function
- * @returns {void}
+ * @returns {string[]}
  */
-function fetchUsernames() {
-    chrome.storage.local.get('usernames', (data) => {
-        if (!data.usernames || (data.usernames.length === 0 && usernamesFiltered.length === 0)) return;
+async function fetchUsernames() {
+    const data = await chrome.storage.local.get('usernames');
+    const usernames = data.usernames;
+    if (!usernames || (usernames.length === 0 && usernamesFiltered.length === 0)) return [];
 
-        usernamesFiltered = data.usernames.map((username) => username.toLowerCase());
-    });
+    return usernames.map((username) => username.toLowerCase());
 }
 
 /**
  * Fetches the list of words to filter from the storage.
  * @function
- * @returns {void}
+ * @returns {string[]}
  */
-function fetchWords() {
-    chrome.storage.local.get('words', (data) => {
-        if (!data.words || (data.words.length === 0 && wordsFiltered.length === 0)) return;
+async function fetchWords() {
+    const data = await chrome.storage.local.get('words');
+    const words = data.words;
+    if (!words || (words.length === 0 && wordsFiltered.length === 0)) return [];
 
-        wordsFiltered = data.words.map((word) => word.toLowerCase());
-    });
+    return words.map((word) => word.toLowerCase());
 }
 
 /**
@@ -148,7 +143,7 @@ function fetchWords() {
  * @listens chrome.runtime.onMessage
  */
 chrome.runtime.onMessage.addListener((request) => {
-    if (request.checkUsernames) fetchUsernames();
+    if (request.checkUsernames) usernamesFiltered = fetchUsernames();
 
-    if (request.checkWords) fetchWords();
+    if (request.checkWords) wordsFiltered = fetchWords();
 });
