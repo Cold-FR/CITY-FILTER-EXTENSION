@@ -1,8 +1,8 @@
 /**
  * @file This file contains the popup script.
  * @author Cold-FR
- * @last-modified 2024-10-10
- * @version 2.0
+ * @last-modified 2024-10-14
+ * @version 2.1
  * @github https://github.com/Cold-FR/CITY-FILTER-EXTENSION
  */
 
