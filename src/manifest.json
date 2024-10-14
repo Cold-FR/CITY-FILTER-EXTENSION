@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "HabboCity - Filter",
-  "version": "2.0",
+  "version": "2.1",
   "description": "Permet d'ignorer les messages en jeu de certains utilisateurs.",
   "permissions": [
     "activeTab",
