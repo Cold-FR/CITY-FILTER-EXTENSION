@@ -69,6 +69,62 @@ function disconnectChatObserver() {
     chatObserver.disconnect();
 }
 
+function setUpIgnoreButton() {
+    const contextMenu = document.querySelector('.nitro-context-menu');
+    if (!contextMenu) return;
+
+    const username = contextMenu.querySelector('.menu-header').innerText;
+    const btnIgnore = document.createElement('div');
+    btnIgnore.className = 'd-flex w-100 align-items-center justify-content-center menu-item list-item';
+
+    if(!usernamesFiltered.includes(username.toLowerCase())) {
+        btnIgnore.textContent = 'Ignorer (City Filter)';
+        btnIgnore.dataset.ignore = 'true';
+    } else {
+        btnIgnore.textContent = 'Ecouter (City Filter)';
+        btnIgnore.dataset.ignore = 'false';
+    }
+
+    contextMenu.appendChild(btnIgnore);
+
+    btnIgnore.addEventListener('click', () => {
+        if (btnIgnore.dataset.ignore === 'true') addUsernameToFilter(contextMenu.querySelector('.menu-header').innerText);
+        else removeUsernameFromFilter(contextMenu.querySelector('.menu-header').innerText);
+
+        btnIgnore.dataset.ignore = btnIgnore.dataset.ignore === 'true' ? 'false' : 'true';
+        btnIgnore.textContent = btnIgnore.dataset.ignore === 'true' ? 'Ignorer (City Filter)' : 'Ecouter (City Filter)';
+    });
+}
+
+function addUsernameToFilter(username) {
+    if(username.trim() === '') return;
+
+    chrome.storage.local.get('usernames', (data) => {
+        const usernames = data.usernames || [];
+        const usernamesCheck = usernames.map((user) => user.toLowerCase());
+        if (usernamesCheck.includes(username.toLowerCase())) return;
+
+        usernames.push(username);
+
+        chrome.storage.local.set({usernames}, () => {
+            usernamesFiltered = usernames.map((user) => user.toLowerCase());
+        });
+    });
+}
+
+function removeUsernameFromFilter(username) {
+    if(username.trim() === '') return;
+
+    chrome.storage.local.get('usernames', (data) => {
+        const usernames = data.usernames || [];
+        const newUsernames = usernames.filter((user) => user !== username);
+
+        chrome.storage.local.set({usernames: newUsernames}, () => {
+            usernamesFiltered = newUsernames.map((user) => user.toLowerCase());
+        });
+    });
+}
+
 /**
  * The body observer.
  * Check if the chat is added to the DOM and calls the setUpChatObserver function.
@@ -78,8 +134,11 @@ function disconnectChatObserver() {
 const bodyObserver = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
         if (mutation.type === 'childList') {
-            if (mutation.addedNodes.length > 0 && !chatObserverState) {
-                if (mutation.addedNodes[0].classList && mutation.addedNodes[0].classList.contains('nitro-chat-widget')) setUpChatObserver();
+            if (mutation.addedNodes.length > 0 && mutation.addedNodes[0].classList) {
+                const mutatedNode = mutation.addedNodes[0];
+                if (mutatedNode.classList.contains('nitro-context-menu') && (mutatedNode.textContent.includes('Ignorer') || mutatedNode.textContent.includes('Ecouter'))) setUpIgnoreButton();
+
+                if (!chatObserverState && mutatedNode.classList.contains('nitro-chat-widget')) setUpChatObserver();
             } else if (mutation.removedNodes.length > 0 && chatObserverState) {
                 if (mutation.removedNodes[0].classList && mutation.removedNodes[0].classList.contains('nitro-chat-widget')) disconnectChatObserver();
             }
@@ -119,6 +178,7 @@ function filterMessages() {
 function fetchUsernames() {
     chrome.storage.local.get('usernames', (data) => {
         const usernames = data.usernames;
+        if (!usernames || (usernames.length === 0 && usernamesFiltered.length === 0)) return [];
 
         usernamesFiltered = usernames.map((user) => user.toLowerCase());
     });
