@@ -254,6 +254,23 @@ function filterMessages() {
 }
 
 /**
+ * Filters mentions from the mentions container based on the global list of usernames to filter.
+ * @function
+ * @returns {void}
+ */
+function filterMentions() {
+    let mentions = Array.from(document.querySelectorAll('.CompNotification .notification:not(.fetched)'));
+    mentions.forEach((mention) => {
+        mention.classList.add('fetched');
+        const username = mention.querySelector('.ntf3OpenProfile').innerText;
+        if (usernamesFiltered.includes(username.toLowerCase().trim())) mention.querySelector('.ntf3Close').click();
+    });
+
+    mentions = Array.from(document.querySelectorAll('.CompNotification .notification'));
+    if(mentions.length === 0) document.querySelector('.CompNotification .closeAll').style.display = 'none';
+}
+
+/**
  * Fetches the list of usernames to filter from the storage.
  * @function
  * @returns {void}
