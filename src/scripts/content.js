@@ -125,7 +125,7 @@ function setUpIgnoreButton() {
 
     const btnIgnore = document.createElement('div');
     btnIgnore.className = 'd-flex w-100 align-items-center justify-content-center menu-item list-item';
-    
+
     if (!usernamesFiltered.includes(contextMenu.querySelector('.menu-header').textContent.toLowerCase().trim())) {
         btnIgnore.textContent = 'Ignorer (City Filter)';
         btnIgnore.dataset.ignore = 'true';
@@ -133,7 +133,7 @@ function setUpIgnoreButton() {
         btnIgnore.textContent = 'Ecouter (City Filter)';
         btnIgnore.dataset.ignore = 'false';
     }
-
+    
     contextMenu.appendChild(btnIgnore);
 
     btnIgnore.addEventListener('click', () => {
@@ -266,7 +266,7 @@ function filterMentions() {
     });
 
     mentions = Array.from(document.querySelectorAll('.CompNotification .notification'));
-    if(mentions.length === 0) document.querySelector('.CompNotification .closeAll').style.display = 'none';
+    if (mentions.length === 0) document.querySelector('.CompNotification .closeAll').style.display = 'none';
 }
 
 /**
