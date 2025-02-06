@@ -127,7 +127,7 @@ function setUpIgnoreButton() {
     const btnIgnore = document.createElement('div');
     btnIgnore.className = 'd-flex w-100 align-items-center justify-content-center menu-item list-item';
 
-    if(!usernamesFiltered.includes(username.toLowerCase())) {
+    if (!usernamesFiltered.includes(username.toLowerCase().trim())) {
         btnIgnore.textContent = 'Ignorer (City Filter)';
         btnIgnore.dataset.ignore = 'true';
     } else {
@@ -241,7 +241,7 @@ function filterMessages() {
     chats.forEach((div) => {
         div.classList.add('fetched');
         const username = div.querySelector('.chat-content .username').innerText.replace(':', '').replace(' ', '');
-        if (usernamesFiltered.includes(username.toLowerCase())) div.style.display = 'none';
+        if (usernamesFiltered.includes(username.toLowerCase().trim())) div.style.display = 'none';
 
         const msg = div.querySelector('.chat-content .message');
         const msgContent = msg.innerText.toLowerCase();
