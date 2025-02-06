@@ -123,11 +123,10 @@ function setUpIgnoreButton() {
     const contextMenu = document.querySelector('.nitro-context-menu');
     if (!contextMenu) return;
 
-    const username = contextMenu.querySelector('.menu-header').innerText;
     const btnIgnore = document.createElement('div');
     btnIgnore.className = 'd-flex w-100 align-items-center justify-content-center menu-item list-item';
-
-    if (!usernamesFiltered.includes(username.toLowerCase().trim())) {
+    
+    if (!usernamesFiltered.includes(contextMenu.querySelector('.menu-header').textContent.toLowerCase().trim())) {
         btnIgnore.textContent = 'Ignorer (City Filter)';
         btnIgnore.dataset.ignore = 'true';
     } else {
