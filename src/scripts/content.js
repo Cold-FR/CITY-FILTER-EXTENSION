@@ -69,6 +69,51 @@ function disconnectChatObserver() {
     chatObserver.disconnect();
 }
 
+/**
+ * The state of the mentions observer.
+ * True if the mentions observer is active, false otherwise.
+ * @type {boolean}
+ * @default false
+ */
+let mentionsObserverState = false;
+
+/**
+ * The mentions observer.
+ * Calls the filterMentions function when a new mention is added.
+ * @const {MutationObserver}
+ * @default {new MutationObserver}
+ */
+const mentionsObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) filterMentions();
+    });
+});
+
+/**
+ * Sets up the mentions observer to active mode.
+ * @function
+ * @returns {void}
+ */
+function setUpMentionsObserver() {
+    mentionsObserverState = true;
+    const mentionsContainer = document.querySelector('.CompNotification');
+
+    if (mentionsContainer) {
+        mentionsObserver.observe(mentionsContainer, observerOptions);
+        filterMentions();
+    }
+}
+
+/**
+ * Disconnect the mentions observer.
+ * @function
+ * @returns {void}
+ */
+function disconnectMentionsObserver() {
+    mentionsObserverState = false;
+    mentionsObserver.disconnect();
+}
+
 function setUpIgnoreButton() {
     const contextMenu = document.querySelector('.nitro-context-menu');
     if (!contextMenu) return;
@@ -126,12 +171,12 @@ function removeUsernameFromFilter(username) {
 }
 
 /**
- * The body observer.
+ * The Nitro Client observer.
  * Check if the chat is added to the DOM and calls the setUpChatObserver function.
  * @constant {MutationObserver}
  * @default {new MutationObserver}
  */
-const bodyObserver = new MutationObserver((mutations) => {
+const nitroObserver = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
         if (mutation.type === 'childList') {
             if (mutation.addedNodes.length > 0 && mutation.addedNodes[0].classList) {
@@ -146,7 +191,28 @@ const bodyObserver = new MutationObserver((mutations) => {
     });
 });
 
-bodyObserver.observe(document.getElementById('root'), observerOptions);
+if (document.getElementById('root')) nitroObserver.observe(document.getElementById('root'), observerOptions);
+
+/**
+ * The body observer.
+ * Check if the mentions container is added to the DOM and calls the setUpMentionsObserver function.
+ * @constant {MutationObserver}
+ * @default {new MutationObserver}
+ */
+const bodyObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if (mutation.type === 'childList') {
+            if (mutation.addedNodes.length > 0 && mutation.addedNodes[0].classList) {
+                const mutatedNode = mutation.addedNodes[0];
+                if (!mentionsObserverState && mutatedNode.classList.contains('CompNotification')) setUpMentionsObserver();
+            } else if (mutation.removedNodes.length > 0 && mentionsObserverState) {
+                if (mutation.removedNodes[0].classList && mutation.removedNodes[0].classList.contains('CompNotification')) disconnectMentionsObserver();
+            }
+        }
+    });
+});
+
+if (document.querySelector('body.webBody')) bodyObserver.observe(document.querySelector('body.webBody'), observerOptions);
 
 /**
  * Filters messages from the chat in game based on the global list of usernames to filter.
