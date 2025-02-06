@@ -114,6 +114,11 @@ function disconnectMentionsObserver() {
     mentionsObserver.disconnect();
 }
 
+/**
+ * Sets up the ignore button in the context menu of Nitro.
+ * @function
+ * @returns {void}
+ */
 function setUpIgnoreButton() {
     const contextMenu = document.querySelector('.nitro-context-menu');
     if (!contextMenu) return;
@@ -141,8 +146,14 @@ function setUpIgnoreButton() {
     });
 }
 
+/**
+ * Adds a player's username to the filter.
+ * @param username - The username to add.
+ * @function
+ * @returns {void}
+ */
 function addUsernameToFilter(username) {
-    if(username.trim() === '') return;
+    if (username.trim() === '') return;
 
     chrome.storage.local.get('usernames', (data) => {
         const usernames = data.usernames || [];
@@ -157,8 +168,14 @@ function addUsernameToFilter(username) {
     });
 }
 
+/**
+ * Removes a player's username from the filter.
+ * @param username - The username to remove.
+ * @function
+ * @returns {void}
+ */
 function removeUsernameFromFilter(username) {
-    if(username.trim() === '') return;
+    if (username.trim() === '') return;
 
     chrome.storage.local.get('usernames', (data) => {
         const usernames = data.usernames || [];
