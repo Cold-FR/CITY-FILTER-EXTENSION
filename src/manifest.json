@@ -9,7 +9,7 @@
   ],
   "content_scripts": [
     {
-      "matches": ["https://nitro.habbocity.me/*", "https://www.habbocity.me/hotel"],
+      "matches": ["https://cdn.habbocity.fr/*", "https://www.habbocity.fr/hotel"],
       "js": ["./scripts/content.js"],
       "all_frames": true
     }
